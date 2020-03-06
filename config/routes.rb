@@ -1,17 +1,17 @@
 Rails.application.routes.draw do
-  # devise_for :users, controllers: {
-  #   registrations: "users/registrations"} 
+  devise_for :users, controllers: {
+    registrations: "users/registrations"} 
 
-    # devise_scope :user do
-    #   get 'users/select', to: 'users/registrations#select'
-    #   get 'users/confirm_post', to: 'users/registrations#confirm_post'
-    #   get 'users/new_address', to: 'users/registrations#address'
-    #   get 'users/completed', to: 'users/registrations#completed'
-    #   get 'users/new', to: 'users/registrations#new'
-    # end
+    devise_scope :user do
+      get 'users/select', to: 'users/registrations#select'
+      get 'users/confirm_phone', to: 'users/registrations#confirm_phone'
+      get 'users/new_address', to: 'users/registrations#new_address'
+      get 'users/completed', to: 'users/registrations#completed'
+      get 'users/new', to: 'users/registrations#new'
+    end
     
     
-  root "tests#index"
+    root to: "items#index"
     
 
 
