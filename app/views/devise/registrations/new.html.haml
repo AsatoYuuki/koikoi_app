@@ -2,21 +2,27 @@
   .block__menu
     会員情報入力
   .block
-    = form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f|
+    = form_with model: @user, url: users_confirm_phone_path, method: :get, id: 'new_user', class: 'new_user', local: true do |f|
       .input-field
         .input-field-main
           = f.label :nickname, "ニックネーム"
           %span.required-true
             必須
           %br
-          = f.text_field :nickname, required: true, placeholder: "例）メルカリ太郎"
+        = f.text_field :nickname, class: "text-box", placeholder: "例）メルカリ太郎"
+        - @user.errors.full_messages_for(:nickname).any?
+        .errors_messages
+        =  render partial: 'error_messages', locals: { user: @user, column: "nickname"}
       .input-field
         .input-field-main
           = f.label :email, "メールアドレス"
           %span.required-true
             必須
           %br
-          = f.text_field :email, required: true, placeholder: "PC・携帯どちらも可"
+          = f.text_field :email, class: "text-box", placeholder: "PC・携帯どちらも可"
+          - @user.errors.full_messages_for(:email).any?
+        .errors_messages
+        =  render partial: 'error_messages', locals: { user: @user, column: "email"}
       - if !session["devise.sns_auth"]
         .input-field
           .input-field-main
@@ -24,14 +30,20 @@
             %span.required-true
               必須
             %br
-            = f.password_field :password, required: true, placeholder: "6文字以上"
+            = f.password_field :password, placeholder: "6文字以上"
+            - @user.errors.full_messages_for(:password).any?
+            .errors_messages
+            =  render partial: 'error_messages', locals: { user: @user, column: "password"}
         .input-field
           .input-field-main
             = f.label :password_confirmation, "パスワード（確認）"
             %span.required-true
               必須
             %br
-            = f.password_field :password_confirmation, required: true, placeholder: "6文字以上"
+            = f.password_field :password_confirmation, placeholder: "6文字以上"
+            - @user.errors.full_messages_for(:password_confirmation).any?
+            .errors_messages
+            =  render partial: 'error_messages', locals: { user: @user, column: "password_confirmation"}
       .information
         .input-field-main
           .information__title
@@ -40,29 +52,44 @@
             安心・安全にご利用いただくために、お客さまの本人情報の登録にご協力ください。他のお客さまに公開されることはありません。
       .input-field
         .input-field-main
-          = f.label :first_name, "お名前（全角）"
+          = f.label :family_name, "お名前（全角）"
           %span.required-true
             必須
           .input-field-multiple
-            = f.text_field :first_name, required: true, placeholder: "例）山田"
-            = f.text_field :last_name, required: true, placeholder: "例）彩"
+            = f.text_field :family_name, class: "text-box",  placeholder: "例）山田"
+            - @user.errors.full_messages_for(:family_name).any?
+            .errors_messages
+            =  render partial: 'error_messages', locals: { user: @user, column: "family_name"}
+            = f.text_field :first_name, class: "text-box", placeholder: "例）彩"
+            - @user.errors.full_messages_for(:first_name).any?
+            .errors_messages
+            =  render partial: 'error_messages', locals: { user: @user, column: "first_name"}
       .input-field
         .input-field-main
-          = f.label :first_name_reading, "お名前カナ（全角）"
+          = f.label :family_name_kana, "お名前カナ（全角）"
           %span.required-true
             必須
           .input-field-multiple
-            = f.text_field :first_name_reading, required: true, placeholder: "例）ヤマダ"
-            = f.text_field :last_name_reading, required: true, placeholder: "例）アヤ"
+            = f.text_field :family_name_kana, class: "text-box", placeholder: "例）ヤマダ"
+            - @user.errors.full_messages_for(:family_name_kana).any?
+            .errors_messages
+            =  render partial: 'error_messages', locals: { user: @user, column: "family_name_kana"}
+            = f.text_field :first_name_kana,class: "text-box",  placeholder: "例）アヤ"
+            - @user.errors.full_messages_for(:first_name_kana).any?
+            .errors_messages
+            =  render partial: 'error_messages', locals: { user: @user, column: "first_name_kana"}
       .input-field
         .input-field-main
           = f.label :birthday, "生年月日"
           %span.required-true
             必須
           .input-field-multiple
-            = raw sprintf(f.date_select(:birthday,{ start_year: Date.today.year, end_year: Date.today.year-120,
-          prompt:"--", use_month_numbers: true, with_css_classes: true,discard_minute:true,
-          date_separator: '%s', datetime_separator: '%s'}, {required: true}), '<div class="input-field-multiple__separate-text">年</div>', '<div class="input-field-multiple__separate-text">月</div>') +'<div class="input-field-multiple__separate-text">日</div>'
+            = f.collection_select :birthday_year, BirthYear.all, :id, :name
+            .day 月
+            = f.select :birthday_month, [1,2,3,4,5,6,7,8,9,10,11,12]
+            .day 日
+            = f.select :birthday, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+          
       .information
         .information__text
           .information__text--gray
@@ -70,7 +97,7 @@
       .information
         .information__text
           「次へ進む」のボタンを押すことにより、利用規約に同意したものとみなします
-      = recaptcha_tags
+      -# = recaptcha_tags
       = f.submit "次へ進む", class:"button back-red font-white"
       %br
       本人情報の登録について＞

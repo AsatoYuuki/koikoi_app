@@ -1,0 +1,66 @@
+.category-lists {
+  // 親カテゴリたちを覆っているもの
+  position: absolute;
+  z-index: 10000;
+
+  &__list {
+    // 親カテゴリ・子カテゴリ・孫カテゴリの大枠
+    // width: 28rem;
+    height: 90rem;
+    background-color: white;
+    border: solid 1px black;
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border-right: 1px solid #333;
+    border-left: 1px solid #333;
+    border-bottom: 1px solid #333;
+    // padding: 20px;
+
+    &--category {
+      // カテゴリ一つ一つ
+      // border: 1px solid;
+      font-size: 12px;
+      display: block;
+      text-decoration: none;
+      color: #333;
+      background-color: #fff;
+      line-height: 20px;
+      height: 50px;
+      width: 220px;
+      padding: 13px;
+      box-sizing: border-box;
+      z-index: 3;
+      display: block;
+    }
+  }
+
+  a {
+    // color: black;
+    }
+    
+
+  .child,
+  .grand-child {
+    // 子カテゴリ・孫カテゴリの位置調整
+    top: -1px; // borderの太さ分だけずらす。
+    left: 100%;
+    height: 100%;
+  }
+
+}
+
+.header-bottom-left__button:hover .category-lists__list.parent {
+  // 「カテゴリから探す」に触れている時、親カテゴリを表示する
+  display: block;
+}
+
+.category-lists__list--category:hover+.category-lists__list {
+  // .category-lists__listに触れている時、その兄弟要素の.category-lists__listを表示する
+  display: block;
+}
+
+.category-lists__list:hover {
+  // カテゴリの大枠にカーソルが合わさっている時、表示し続ける
+  display: block;
+}
