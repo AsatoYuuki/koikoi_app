@@ -1,4 +1,24 @@
 ja:
+
+
+  activerecord:
+    models:
+      product: 商品
+      images: 画像
+    attributes:
+      product:
+        images: 画像
+        name: 名前
+        categories_id: カテゴリー
+        price: 価格
+        content: 説明
+        status_id: 状態
+        delivery_date_id: 配送日
+        prefecture_id: 発送元の地域
+        shopping_charge_id: 配送料
+    
+
+
   activerecord:
     attributes:
       user:

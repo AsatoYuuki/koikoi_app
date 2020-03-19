@@ -107,6 +107,8 @@
       &__right {
         input[type="text"] {
           text-align: right;
+          height: 40px;
+          font-size: 15px;
         }
 
         #profit {
@@ -132,7 +134,7 @@
 //商品出品・編集画面
 #selected-item-images {
   width: 100%;
-  height: 15rem;
+  height: 25rem;
   display: flex;
   cursor: pointer;
   overflow: hidden;
@@ -253,3 +255,11 @@ select.select-category {
   font-weight: bold;
 }
 
+.zeikin_text{
+  font-size: 15px;
+}
+
+.price_text{
+  font-size: 25px;
+  font-weight: bold;
+}
